@@ -81,11 +81,12 @@ DELETE, ALETERNATE DELETE AND DELETE MANY
 '''
 try:
     with connection.cursor() as cursor:
-        
+        # DELETE MANY
+        cursor.executemany("DELETE FROM Friends WHERE name = %s;", ['Bob', 'Jim'])
         # DELETE
         # cursor.execute("DELETE FROM Friends WHERE name = 'Bob';")
         # ALTERNATIVE
-        cursor.execute("DELETE FROM Friends WHERE name = %s;", 'Bob')
+        # cursor.execute("DELETE FROM Friends WHERE name = %s;", 'Bob')
         connection.commit()
 
 finally:

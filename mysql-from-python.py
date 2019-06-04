@@ -48,16 +48,24 @@ try:
         connection.commit()
 '''
 
+'''
 try:
-    '''
     EXECUTING MANY STATEMENTS
-    '''
     # Use default cursor as we aren't pulling data from the table
     with connection.cursor() as cursor:
         rows = [("Bob", 21, "1990-02-06 23:04:56"),
                 ("Jim", 56, "1955-05-09 13:12:54"),
                 ("Fred", 100, "1911-09-12 01:01:01")]
         cursor.executemany("INSERT INTO Friends VALUES(%s, %s, %s);", rows)
+        connection.commit()
+'''
+
+try:
+    '''
+    UPDATE
+    '''
+    with connection.cursor() as cursor:
+        cursor.execute("UPDATE Friends SET age = 22 WHERE name = 'BOB';")
         connection.commit()
 
 finally:

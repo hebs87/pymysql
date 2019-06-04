@@ -78,7 +78,6 @@ try:
 
 '''
 DELETE, ALETERNATE DELETE AND DELETE MANY
-'''
 try:
     with connection.cursor() as cursor:
         # DELETE MANY
@@ -87,6 +86,24 @@ try:
         # cursor.execute("DELETE FROM Friends WHERE name = 'Bob';")
         # ALTERNATIVE
         # cursor.execute("DELETE FROM Friends WHERE name = %s;", 'Bob')
+        connection.commit()
+'''
+
+'''
+DELETE WHERE IN
+'''
+try:
+    with connection.cursor() as cursor:
+        list_of_names = ['fred', 'Fred']
+        # Prepare the string with the same number of placeholders as in the list of names
+        # Done in a way that any length of a list of names would work
+        # Join each name in the list with a comma, this will join any number of values in the list
+        format_strings = ','.join(['%s']*len(list_of_names))
+        # The placeholder in the command is formatted to push the value of the format_strings variable into it
+        # The list_of_names variable is then pushed into the placeholder in the format_strings variable
+        cursor.execute("DELETE FROM Friends WHERE name in ({})".format(format_strings), list_of_names)
+        # This is the same as the below, with a dynamic list of names instead:
+        # cursor.execute("DELETE FROM Friends WHERE name in ('fred', 'Fred')")
         connection.commit()
 
 finally:

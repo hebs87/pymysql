@@ -62,13 +62,18 @@ try:
 
 try:
     '''
-    UPDATE AND ALTERNATIVE UPDATE
+    UPDATE, ALTERNATIVE UPDATE AND UPDATE MANY
     '''
     with connection.cursor() as cursor:
+        # UPDATE MANY
+        rows = [(23, "Bob"),
+                (24, "Jim"),
+                (25, "Fred")]
+        cursor.executemany("UPDATE Friends SET age = %s WHERE name = %s;", rows)
         # UPDATE
         # cursor.execute("UPDATE Friends SET age = 22 WHERE name = 'BOB';")
         # ALTERNATIVE
-        cursor.execute("UPDATE Friends SET age = %s WHERE name = %s;", (23, 'Bob'))
+        # cursor.execute("UPDATE Friends SET age = %s WHERE name = %s;", (23, 'Bob'))
         connection.commit()
 
 finally:

@@ -31,12 +31,11 @@ try:
             print(row)
 '''
 
+'''
 try:
-    '''
     CREATING AND INSERTING INTO TABLE
-    '''
-    # cursor(pymysql.cursors.DictCursor) returns data in dictionary and includes the column names
-    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+    # Use default cursor as we aren't pulling data from the table
+    with connection.cursor() as cursor:
         # 2. Values for the table stored in a tuple
         row = ("Bob", 21, "1990-02-06 23:04:56")
         # 1. Creating a new table if it doesn't exist - run file after this to add table to database
@@ -46,6 +45,19 @@ try:
         # table already exists
         # 3. Use INSERT command to insert data into the table after created
         cursor.execute("INSERT INTO Friends VALUES(%s, %s, %s);", row)
+        connection.commit()
+'''
+
+try:
+    '''
+    EXECUTING MANY STATEMENTS
+    '''
+    # Use default cursor as we aren't pulling data from the table
+    with connection.cursor() as cursor:
+        rows = [("Bob", 21, "1990-02-06 23:04:56"),
+                ("Jim", 56, "1955-05-09 13:12:54"),
+                ("Fred", 100, "1911-09-12 01:01:01")]
+        cursor.executemany("INSERT INTO Friends VALUES(%s, %s, %s);", rows)
         connection.commit()
 
 finally:

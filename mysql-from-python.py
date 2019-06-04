@@ -32,8 +32,8 @@ try:
 '''
 
 '''
+CREATING AND INSERTING INTO TABLE
 try:
-    CREATING AND INSERTING INTO TABLE
     # Use default cursor as we aren't pulling data from the table
     with connection.cursor() as cursor:
         # 2. Values for the table stored in a tuple
@@ -49,8 +49,8 @@ try:
 '''
 
 '''
+EXECUTING MANY STATEMENTS
 try:
-    EXECUTING MANY STATEMENTS
     # Use default cursor as we aren't pulling data from the table
     with connection.cursor() as cursor:
         rows = [("Bob", 21, "1990-02-06 23:04:56"),
@@ -60,10 +60,9 @@ try:
         connection.commit()
 '''
 
+'''
+UPDATE, ALTERNATIVE UPDATE AND UPDATE MANY
 try:
-    '''
-    UPDATE, ALTERNATIVE UPDATE AND UPDATE MANY
-    '''
     with connection.cursor() as cursor:
         # UPDATE MANY
         rows = [(23, "Bob"),
@@ -71,9 +70,22 @@ try:
                 (25, "Fred")]
         cursor.executemany("UPDATE Friends SET age = %s WHERE name = %s;", rows)
         # UPDATE
-        # cursor.execute("UPDATE Friends SET age = 22 WHERE name = 'BOB';")
+        cursor.execute("UPDATE Friends SET age = 22 WHERE name = 'BOB';")
         # ALTERNATIVE
-        # cursor.execute("UPDATE Friends SET age = %s WHERE name = %s;", (23, 'Bob'))
+        cursor.execute("UPDATE Friends SET age = %s WHERE name = %s;", (23, 'Bob'))
+        connection.commit()
+'''
+
+'''
+DELETE, ALETERNATE DELETE AND DELETE MANY
+'''
+try:
+    with connection.cursor() as cursor:
+        
+        # DELETE
+        # cursor.execute("DELETE FROM Friends WHERE name = 'Bob';")
+        # ALTERNATIVE
+        cursor.execute("DELETE FROM Friends WHERE name = %s;", 'Bob')
         connection.commit()
 
 finally:

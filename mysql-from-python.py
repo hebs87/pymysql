@@ -1,5 +1,6 @@
 # Import os (operating system) and pymysql libraries
 import os
+# CREATING TABLE LESSON - Import datetime, as this will be one of our col values
 import pymysql
 
 # Get username from Cloud9 workspace
@@ -12,20 +13,40 @@ connection = pymysql.connect(host='localhost',
                             password='',
                             db='Chinook')
 
+'''
+*********************************TESTING***************************************
 try:
     # cursor() is default and returns row data as tuples
     # cursor(pymysql.cursors.DictCursor) returns data in dictionary and includes the column names
     with connection.cursor(pymysql.cursors.DictCursor) as cursor:
         sql = "SELECT * FROM Genre;"
         cursor.execute(sql)
-        '''
+        
         This is for testing
         result = cursor.fetchall()
         print(result)
-        '''
+        
         # To iterate over each row and return the data, we need a for loop
         for row in cursor:
             print(row)
+'''
+
+try:
+    '''
+    CREATING AND INSERTING INTO TABLE
+    '''
+    # cursor(pymysql.cursors.DictCursor) returns data in dictionary and includes the column names
+    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+        # 2. Values for the table stored in a tuple
+        row = ("Bob", 21, "1990-02-06 23:04:56")
+        # 1. Creating a new table if it doesn't exist - run file after this to add table to database
+        #cursor.execute("""CREATE TABLE IF NOT EXISTS
+                        # Friends(name char(20), age int, DOB datetime);""")
+        # Note that the above will still display a warning (not error) if the
+        # table already exists
+        # 3. Use INSERT command to insert data into the table after created
+        cursor.execute("INSERT INTO Friends VALUES(%s, %s, %s);", row)
+        connection.commit()
 
 finally:
     # Close the connection to MySQL, regardless of whether code works

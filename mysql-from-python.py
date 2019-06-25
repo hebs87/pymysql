@@ -1,6 +1,7 @@
 # Import os (operating system) and pymysql libraries
 import os
 # CREATING TABLE LESSON - Import datetime, as this will be one of our col values
+import datetime
 import pymysql
 
 # Get username from Cloud9 workspace
